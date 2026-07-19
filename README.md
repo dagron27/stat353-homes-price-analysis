@@ -131,6 +131,29 @@ reasons unrelated to this repository's own code.
 - **Reproducibility depends on an external site staying available and
   unchanged.** See Continuous Integration above.
 
+### CI Failure: Unescaped `$` Broke LaTeX Compilation -- Fixed (unverified locally)
+
+**Status: fix applied, not locally re-verified.** CI failed with
+`Error: LaTeX failed to compile ... Stat353Proj3v2.tex` -- the knit step
+(Rmd to `.tex`) succeeded, but the LaTeX-to-PDF compilation of that
+generated file failed. The `.Rmd`'s "Elements" section contains the line
+`Price Asking price (in $1,000's)`, in plain prose text, not inside an R
+code chunk. R Markdown's underlying pandoc conversion treats `$...$` as
+inline math by default (the `tex_math_dollars` extension); this is the
+only `$` anywhere in this document's prose, so pandoc would find no
+matching closing `$` and this stray math-mode delimiter is the most
+plausible cause of malformed LaTeX in the generated `.tex` file. Escaped
+it to `\$1,000's` (a literal dollar sign, not math-mode).
+
+**Not verified end to end**: neither R/rmarkdown/pandoc/knitr nor a
+LaTeX distribution are available in the environment this fix was made
+in, so this could not be confirmed by actually re-knitting the document
+locally -- only by reasoning from the error text and the document's
+content (this is the only unescaped `$` in prose across the whole file,
+and this exact class of bug -- an unescaped `$` breaking LaTeX output --
+is a well-known R Markdown pitfall matching the reported symptom
+precisely). Recommend confirming the next CI run actually passes.
+
 ### Security
 
 No findings. This is a local statistical analysis script with one

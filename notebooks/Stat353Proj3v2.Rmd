@@ -59,7 +59,7 @@ CA_data <- homesForSale %>% filter(State == "CA")
 ```
 ### Elements
 State Location of the home (CA, NJ, NY, or PA)
-Price Asking price (in $1,000’s)
+Price Asking price (in \$1,000’s)
 Size Area of all rooms (in 1,000’s sq. ft.)
 Beds Number of bedrooms
 Baths Number of bathrooms
