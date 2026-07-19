@@ -23,7 +23,7 @@ significantly across all four states. Grading weighted Analysis heaviest
 (40%), then Accuracy and Writing (20% each), Structure (15%), and Sources
 (5%).
 
-**Confirmed implemented**, per `Stat353Proj3v2.Rmd` (see Overview below):
+**Confirmed implemented**, per `notebooks/Stat353Proj3v2.Rmd` (see Overview below):
 all five questions are answered, each with a stated null/alternative
 hypothesis, an R model (`lm()` for questions 1-4, `aov()` for question 5),
 a plot, a written interpretation of the model output, and a conclusion
@@ -38,7 +38,7 @@ overall conclusion) and a Resources section citing the data source.
 
 ## Overview
 
-`Stat353Proj3v2.Rmd` is a single R Markdown report (knits to both Word and
+`notebooks/Stat353Proj3v2.Rmd` is a single R Markdown report (knits to both Word and
 PDF; `docs/Report.pdf` is the committed rendered output) structured as
 Background / Task / Data / Analysis (one subsection per question) /
 Summary / Resources. Findings, verified against the report's own R output:
@@ -86,20 +86,20 @@ tinytex::install_tinytex()
 Knit the report:
 
 ```r
-rmarkdown::render("Stat353Proj3v2.Rmd", output_format = "pdf_document")
+rmarkdown::render("notebooks/Stat353Proj3v2.Rmd", output_format = "pdf_document")
 ```
 
 The report fetches its data live over HTTPS from
 `https://www.lock5stat.com/datasets3e/HomesForSale.csv` at knit time --
 see Known Issues below -- so an internet connection is required to
-reproduce it, and the local `HomesForSale*.csv`/`.xlsx` files in this repo
+reproduce it, and the local `data/HomesForSale*.csv`/`.xlsx` files in this repo
 are not read by the report at all.
 
 ## Continuous Integration
 
 A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push
 and can also be triggered manually via `workflow_dispatch`. It sets up R,
-installs the packages listed above, and knits `Stat353Proj3v2.Rmd` to PDF
+installs the packages listed above, and knits `notebooks/Stat353Proj3v2.Rmd` to PDF
 end to end -- a real functional run (fetching the live dataset and
 re-fitting every model), not a syntax-only check. The rendered PDF is
 uploaded as a downloadable build artifact and is never committed back to
@@ -117,9 +117,9 @@ reasons unrelated to this repository's own code.
 ### Dead Code / Hygiene
 
 - **The committed local dataset files are not used by the report.**
-  `HomesForSale.csv`, `HomesForSale.xlsx`, `HomesForSaleCA.csv`,
-  `HomesForSaleCanton.csv`, and `HomesForSaleNY.csv` are all present in
-  this repository, but `Stat353Proj3v2.Rmd`'s only data-loading call is
+  `data/HomesForSale.csv`, `data/HomesForSale.xlsx`, `data/HomesForSaleCA.csv`,
+  `data/HomesForSaleCanton.csv`, and `data/HomesForSaleNY.csv` are all present in
+  this repository, but `notebooks/Stat353Proj3v2.Rmd`'s only data-loading call is
   `read.csv("https://www.lock5stat.com/datasets3e/HomesForSale.csv")` --
   it fetches fresh data from the web rather than reading any of these
   local files. They were most likely downloaded for manual inspection of

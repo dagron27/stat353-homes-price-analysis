@@ -39,7 +39,7 @@ jobs:
       - name: Knit report to PDF
         run: |
           mkdir -p ci-output
-          Rscript -e 'rmarkdown::render("Stat353Proj3v2.Rmd", output_format = "pdf_document", output_dir = "ci-output")'
+          Rscript -e 'rmarkdown::render("notebooks/Stat353Proj3v2.Rmd", output_format = "pdf_document", output_dir = "ci-output")'
 
       - name: Upload rendered report
         if: always()
