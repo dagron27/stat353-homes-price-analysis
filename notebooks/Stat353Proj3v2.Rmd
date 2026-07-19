@@ -45,7 +45,7 @@ Explore the following questions:
 
 (5) Are there significant differences in home prices among the four states (CA, NY, NJ, PA)? This will help you determine if the state in which a home is located has a significant impact on its price. All data should be used.
 
-The primary objective of this analysis is to examine the dynamics of home pricing, concentrating on California properties. Our investigation kicks off by isolating California data to understand how individual factors—home size, bedrooms, and bathrooms—affect home prices. Utilizing linear regression, we quantify these influences and evaluate their statistical significance. Next, we expand our focus to assess the combined impact of size, bedrooms, and bathrooms on home prices. The final phase widens the scope to include four states—California, New York, New Jersey, and Pennsylvania. Through an ANOVA approach, we aim to determine if a home's location significantly influences its price. This concise analysis yields valuable insights into housing prices across states, enhancing our understanding of the factors that mold real estate prices.
+The primary objective of this analysis is to examine the dynamics of home pricing, concentrating on California properties. Our investigation kicks off by isolating California data to understand how individual factors---home size, bedrooms, and bathrooms---affect home prices. Utilizing linear regression, we quantify these influences and evaluate their statistical significance. Next, we expand our focus to assess the combined impact of size, bedrooms, and bathrooms on home prices. The final phase widens the scope to include four states---California, New York, New Jersey, and Pennsylvania. Through an ANOVA approach, we aim to determine if a home's location significantly influences its price. This concise analysis yields valuable insights into housing prices across states, enhancing our understanding of the factors that mold real estate prices.
 
 ## DATA
 
@@ -59,8 +59,8 @@ CA_data <- homesForSale %>% filter(State == "CA")
 ```
 ### Elements
 State Location of the home (CA, NJ, NY, or PA)
-Price Asking price (in \$1,000’s)
-Size Area of all rooms (in 1,000’s sq. ft.)
+Price Asking price (in \$1,000's)
+Size Area of all rooms (in 1,000's sq. ft.)
 Beds Number of bedrooms
 Baths Number of bathrooms
 
@@ -71,10 +71,10 @@ Baths Number of bathrooms
 #### Hypotheses
 
 Null Hypothesis (H0): The Size of a home does not have a significant impact on its Price in California.
-H:βSize=0
+H0: $\beta_{Size} = 0$
 
 Alternative Hypothesis (H1): The Size of a home has a significant influence on its Price in California.
-H1:βSize≠0
+H1: $\beta_{Size} \neq 0$
 
 ```{r}
 # Size vs Price in California
@@ -96,9 +96,9 @@ The following insights have been derived from a linear model created in R to eva
 
 ##### Key Findings
 
-Regression Equation: Price = −56.82 + 0.34 × Size
+Regression Equation: Price = -56.82 + 0.34 x Size
 
-Intercept Significance: The intercept (−56.82) is not statistically significant (p-value = 0.716), indicating that the predicted price when the Size is zero may lack practical relevance.
+Intercept Significance: The intercept (-56.82) is not statistically significant (p-value = 0.716), indicating that the predicted price when the Size is zero may lack practical relevance.
 
 Size Coefficient: The Size coefficient (0.34) is highly statistically significant (p-value = 0.0005), suggesting a substantial influence of home Size on Price in CA.
 
@@ -121,10 +121,10 @@ Size is found to be statistically significant in influencing home Price in CA. T
 #### Hypotheses
 
 Null Hypothesis (H0): The number of bedrooms of a home does not significantly influence its price in California.
-H0:βBeds=0
+H0: $\beta_{Beds} = 0$
 
 Alternative Hypothesis (H1): The number of bedrooms of a home significantly influences its price in California.
-H1:βBeds≠0
+H1: $\beta_{Beds} \neq 0$
 
 ```{r}
 # Bedrooms vs Price in California
@@ -147,7 +147,7 @@ The following insights have been derived from a linear model created in R to eva
 
 ##### Key Findings
 
-Regression Equation: Price = 269.76 + 84.77 × Beds
+Regression Equation: Price = 269.76 + 84.77 x Beds
 
 Intercept Significance: The intercept (269.76) is not statistically significant (p-value = 0.258), suggesting that the predicted Price when the number of Beds is zero may lack practical relevance.
 
@@ -170,10 +170,10 @@ The number of Beds is not found to be statistically significant in influencing h
 #### Hypotheses
 
 Null Hypothesis (H0): The number of bathrooms of a home does not significantly influence its price in California.
-H0:βBaths=0
+H0: $\beta_{Baths} = 0$
 
 Alternative Hypothesis (H1): The number of bathrooms of a home significantly influences its price in California.
-H1:βBaths≠0
+H1: $\beta_{Baths} \neq 0$
 
 ```{r}
 # (3) Bathrooms vs Price in California
@@ -196,7 +196,7 @@ The following insights have been derived from a linear model created in R to eva
 
 ##### Key Findings
 
-Regression Equation: Price = 90.71 + 194.74 × Baths
+Regression Equation: Price = 90.71 + 194.74 x Baths
 
 Intercept Significance: The intercept (90.71) is not statistically significant (p-value = 0.546), indicating that the predicted Price when the number of Baths is zero may lack practical relevance.
 
@@ -219,10 +219,10 @@ The number of Baths is found to be statistically significant in influencing home
 #### Hypotheses
 
 Null Hypothesis (H0): The size, number of bedrooms, and number of bathrooms jointly do not significantly influence the price of a home in California.
-H0:βSize=βBeds=βBaths=0
+H0: $\beta_{Size} = \beta_{Beds} = \beta_{Baths} = 0$
 
 Alternative Hypothesis (H1): At least one of the coefficients for size, number of bedrooms, or number of bathrooms is not equal to zero, indicating a significant joint influence on home price in California.
-H1:At least one of βSize,βBeds,βBaths ≠ 0
+H1: At least one of $\beta_{Size}, \beta_{Beds}, \beta_{Baths} \neq 0$
 
 ```{r}
 # (4) Multiple Regression in California
@@ -245,7 +245,7 @@ The following insights have been derived from a linear model created in R to eva
 
 ##### Key Findings
 
-Regression Equation: Price = −41.56 + 0.28 × Size − 33.70 × Beds + 83.98 × Baths
+Regression Equation: Price = -41.56 + 0.28 x Size - 33.70 x Beds + 83.98 x Baths
 
 Intercept Significance: The intercept (-41.56) is not statistically significant (p-value = 0.8449), suggesting that the predicted Price when Size, number of Beds, and number of Baths are all zero may lack practical relevance.
 
@@ -274,10 +274,10 @@ The joint influence of Size, Beds, and Baths on the Price in CA is deemed statis
 #### Hypotheses
 
 Null Hypothesis (H0): There are no significant differences in mean home prices among the states (CA, NY, NJ, PA).
-H0:βCA=βNY=βNJ=βPA=0
+H0: $\beta_{CA} = \beta_{NY} = \beta_{NJ} = \beta_{PA} = 0$
  
 Alternative Hypothesis (H1): There are significant differences in mean home prices among the states (CA, NY, NJ, PA).
-H1:At least one of βCA,βNY,βNJ,βPA ≠ 0
+H1: At least one of $\beta_{CA}, \beta_{NY}, \beta_{NJ}, \beta_{PA} \neq 0$
 
 ```{r}
 # (5) ANOVA for Price differences among states

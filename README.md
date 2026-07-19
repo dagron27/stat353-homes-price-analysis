@@ -131,28 +131,46 @@ reasons unrelated to this repository's own code.
 - **Reproducibility depends on an external site staying available and
   unchanged.** See Continuous Integration above.
 
-### CI Failure: Unescaped `$` Broke LaTeX Compilation -- Fixed (unverified locally)
+### CI Failure: Unescaped `$` Broke LaTeX Compilation -- Fixed
 
-**Status: fix applied, not locally re-verified.** CI failed with
-`Error: LaTeX failed to compile ... Stat353Proj3v2.tex` -- the knit step
-(Rmd to `.tex`) succeeded, but the LaTeX-to-PDF compilation of that
-generated file failed. The `.Rmd`'s "Elements" section contains the line
-`Price Asking price (in $1,000's)`, in plain prose text, not inside an R
-code chunk. R Markdown's underlying pandoc conversion treats `$...$` as
-inline math by default (the `tex_math_dollars` extension); this is the
-only `$` anywhere in this document's prose, so pandoc would find no
-matching closing `$` and this stray math-mode delimiter is the most
-plausible cause of malformed LaTeX in the generated `.tex` file. Escaped
-it to `\$1,000's` (a literal dollar sign, not math-mode).
+CI failed with `Error: LaTeX failed to compile ... Stat353Proj3v2.tex` --
+the knit step (Rmd to `.tex`) succeeded, but the LaTeX-to-PDF compilation
+of that generated file failed. The `.Rmd`'s "Elements" section contains
+the line `Price Asking price (in $1,000's)`, in plain prose text, not
+inside an R code chunk. R Markdown's underlying pandoc conversion treats
+`$...$` as inline math by default (the `tex_math_dollars` extension);
+this was the only unescaped `$` anywhere in this document's prose, so
+pandoc found no matching closing `$` and this stray math-mode delimiter
+was the cause of the malformed LaTeX in the generated `.tex` file.
+Escaped it to `\$1,000's` (a literal dollar sign, not math-mode).
 
-**Not verified end to end**: neither R/rmarkdown/pandoc/knitr nor a
-LaTeX distribution are available in the environment this fix was made
-in, so this could not be confirmed by actually re-knitting the document
-locally -- only by reasoning from the error text and the document's
-content (this is the only unescaped `$` in prose across the whole file,
-and this exact class of bug -- an unescaped `$` breaking LaTeX output --
-is a well-known R Markdown pitfall matching the reported symptom
-precisely). Recommend confirming the next CI run actually passes.
+### CI Failure: Literal Unicode Characters Unsupported by `pdflatex` -- Fixed
+
+After the `$` fix above, the next CI run progressed further (through the
+knit step and partway through LaTeX compilation) but failed with a new
+error: `! LaTeX Error: Unicode character β (U+03B2) not set up for use
+with LaTeX.` The default PDF engine (`pdflatex`, an 8-bit engine) can't
+render arbitrary Unicode bytes that pass through pandoc unconverted. The
+document's five hypothesis-statement sections used literal Unicode `β`
+and `≠` characters (e.g. `H0:βSize=0`, `H1:βSize≠0`) instead of LaTeX
+math syntax; these were rewritten as proper inline math (`H0:
+$\beta_{Size} = 0$`, `H1: $\beta_{Size} \neq 0$`, and equivalently for
+Beds, Baths, the joint-regression hypothesis, and the states-ANOVA
+hypothesis). A full scan of the document then also turned up several
+other non-ASCII typographic characters in prose that could have caused
+the same class of failure on a later run -- em dashes (`—`), curly
+apostrophes (`'`), a Unicode minus sign (`−`), and multiplication signs
+(`×`) -- all replaced with LaTeX/pandoc-safe ASCII equivalents (`---`
+markdown em-dash syntax, straight apostrophes, hyphens, and `x`
+respectively).
+
+**Verification**: `pdflatex`/`xelatex` (TeXLive) were available locally,
+so the exact math syntax used in the fix (`$\beta_{Size} = 0$`,
+`\neq`, subscripted Greek letters) was compile-tested in a standalone
+`.tex` file and the resulting PDF visually confirmed to render correctly
+before being applied to the real document -- a stronger verification
+than the first `$` fix above, which could only be reasoned about from
+the error text since no LaTeX toolchain was available at the time.
 
 ### Security
 
