@@ -1,6 +1,6 @@
 # Exploring Homes in CA, NJ, NY, and PA -- Statistical Analysis
 
-![CI](https://github.com/dagron27/stat353-homes-price-analysis/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/dagron27/homes-price-analysis/actions/workflows/ci.yml/badge.svg)
 
 **Course:** `STAT 353-54, Statistical Methods I for Engineering, Fall 2023`
 
